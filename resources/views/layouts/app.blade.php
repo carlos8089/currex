@@ -11,7 +11,34 @@
         <link rel="stylesheet" href="https://fonts.bunny.net/css2?family=Nunito:wght@400;600;700&display=swap">
 
         <!-- Scripts -->
-        @vite(['resources/css/app.css', 'resources/js/app.js'])
+        @vite(['resources/css/app.css', 'resources/css/my.css', 'resources/js/app.js'])
+        <script defer>
+            // On page load or when changing themes, best to add inline in `head` to avoid FOUC
+            if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark')
+            } else {
+            document.documentElement.classList.remove('dark')
+            }
+        
+            // Whenever the user explicitly chooses light mode
+            const l = document.getElementById("headlessui-listbox-option-68");
+            l.addEventListener('click', light);
+            function light() {
+                localStorage.theme = 'light',
+                l.innerHTML('data-headlessui-state', "selected");
+            }
+            
+        
+            // Whenever the user explicitly chooses dark mode
+            document.getElementById("headlessui-listbox-option-69").addEventListener('click', dark);
+            function dark() {
+                localStorage.theme = 'dark',
+                data-headlessui-state = "selected"
+            }
+        
+            // Whenever the user explicitly chooses to respect the OS preference
+            localStorage.removeItem('theme')
+        </script>
     </head>
     <body class="font-sans antialiased">
         <div class="min-h-screen bg-gray-100 dark:bg-gray-900">
